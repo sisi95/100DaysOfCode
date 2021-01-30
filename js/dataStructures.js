@@ -333,3 +333,94 @@ class HashTable {
     }
 }
 
+var Node = function(element) {
+    this.element = element;
+    this.next = null;
+}
+
+var Kitten = new Node('Kitten');
+var Puppy = new Node('Puppy');
+var Cat = new Node('Cat');
+var Dog = new Node('Dog');
+
+Kitten.next = Puppy;
+Puppy.next = Cat;
+Cat.next = Dog;
+
+function LinkedList() {
+    let length = 0;
+    let head = null;
+
+    function Node(element) {
+        this.element = element;
+        this.next = null;
+    }
+
+    this.head = () => head;
+
+    this.size = () => length;
+
+    this.add = (element) => {
+        length++;
+        const node = new Node(element);
+
+        if (head) {
+            let current = head;
+            while (current.next !== null) {
+                current = current.next;
+            }
+
+            current.next = node;
+        } else {
+            head = node;
+        }
+    }
+
+    this.remove = (element) => {
+        if (head.element === element) {
+            head = head.next;
+            return length--;
+        }
+
+        let previous = head;
+        while (previous) {
+            let current = previous.next;
+            if (current) {
+                if (current.element === element) {
+                    previous.next = current.next;
+                    return length--;
+                }
+            }
+
+            previous = current;
+        }
+    }
+
+    this.isEmpty = () => {
+        if (head.element === null) {
+            return true;
+        }
+
+        return false;
+    }
+
+    this.indexOf = () => {
+        if (this.isEmpty) {
+            return -1;
+        }
+
+        var index = 0;
+        while (head) {
+            let current = head.next;
+            index++;
+
+            if (current.element === element) {
+                return index;
+            }
+        }
+    }
+
+    this.elementAt = () => {
+        return undefined;
+    }
+}
