@@ -420,7 +420,14 @@ function LinkedList() {
         }
     }
 
-    this.elementAt = () => {
+    this.elementAt = (index) => {
+        if (this.isEmpty) {
+            return undefined;
+        }
+
+        let current = head;
+        for (let i = 0; i < index; )
+
         return undefined;
     }
 }
