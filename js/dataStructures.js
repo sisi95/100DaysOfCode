@@ -397,37 +397,73 @@ function LinkedList() {
     }
 
     this.isEmpty = () => {
-        if (head.element === null) {
-            return true;
-        }
-
-        return false;
+        return this.size() > 0 ? false : true;
     }
 
-    this.indexOf = () => {
-        if (this.isEmpty) {
-            return -1;
-        }
+    this.indexOf = (element) => {
+        let current = head, index = -1, indexFound = false;
 
-        var index = 0;
-        while (head) {
-            let current = head.next;
+        while (!indexFound && current) {
             index++;
 
             if (current.element === element) {
-                return index;
+                indexFound = true;
             }
+
+            current = current.next;
         }
+        
+        return indexFound ? index : -1;
     }
 
-    this.elementAt = (index) => {
-        if (this.isEmpty) {
-            return undefined;
+    this.elementAt = (i) => {
+        let currentNode = head, currentElement, index = -1, indexReached = false;
+        while (!indexReached && currentNode) {
+            index++;
+            currentElement = currentNode.element;
+            if (index === i) {
+                indexReached = true;
+            }
+
+            currentNode = currentNode.next;
         }
 
-        let current = head;
-        for (let i = 0; i < index; )
+        return indexReached ? currentElement : undefined;
+    }
 
-        return undefined;
+    this.removeAt = (index) => {
+        if (index < 0 || index >= length) {
+            return null;
+        } 
+
+        let node = head;
+        if (index === 0) {
+            head = head.next;
+            length--;
+            return node.element;
+        }
+
+        let i = 0;
+        while (i + 1 !== index) {
+            node = node.next;
+            i++;
+        }
+
+        const deleted = node.next;
+        node.next = node.next.next;
+        length--;
+
+        return deleted.element;
+    }
+
+    this.addAt = (index, element) => {
+        if (index < 0 || index >= length) {
+            return false;
+        }
+
+        let node = head;
+        if (index === 0) {
+            head = element;
+        }
     }
 }
