@@ -462,8 +462,113 @@ function LinkedList() {
         }
 
         let node = head;
+        if (index > 0) {
+            let i = 0;
+            while (i + 1 !== index) {
+                node = node.next;
+                i++;
+            }
+        }
+
+        const newNode = new Node(element);
+        newNode.next = node.next;
+
         if (index === 0) {
-            head = element;
+            head = newNode;
+        } else {
+            node.next = newNode;
+        }
+
+        length++;
+    }
+}
+
+var Node1 = function(data, prev) {
+    this.data = data;
+    this.prev = prev;
+    this.next = null;
+};
+
+function DoublyLinkedList() {
+    let head = null;
+    let tail = null;
+
+    this.add = (data) => {
+        if (!data) {
+            return false;
+        }
+
+        let newNode = new Node1(data, null);
+        if (head === null) {
+            head = newNode;
+        } else {
+            let nextNode = head;
+            while (nextNode.next) {
+                nextNode = nextNode.next;
+            }
+
+            nextNode.next = newNode;
+        }
+
+        if (tail === null) {
+            tail = newNode;
+        } else {
+            let prevNode = tail;
+            tail = newNode;
+            tail.prev = prevNode;
+        }
+    }
+
+    this.remove = (element) => {
+        let current = head;
+        if (!current && !tail) {
+            return null;
+        }
+
+        if (tail.data === element) {
+            let prevNode = tail.prev;
+            tail = prevNode;
+            tail.next = null;
+            return;
+        }
+
+        while(current.next) {
+            if (current.data === element) {
+                let removedNode = current;
+                let prevNode = current.prev;
+                let nextNode = current.next;
+
+                if (head.data === removedNode.data) {
+                    head = nextNode;
+                    head.prev = null;
+                    break;
+                }
+
+                prevNode.next = nextNode;
+                nextNode.prev = prevNode;
+            }
+
+            current = current.next;
+        }
+    }
+
+    this.reverse = () => {
+        if (!head) {
+            return null;
+        }
+
+        let temp = null;
+        let currentNode = this.head;
+
+        while (currentNode) {
+            temp = currentNode.prev;
+            currentNode.prev = currentNode.next;
+            currentNode.next = temp;
+            currentNode = currentNode.prev;
+        }
+
+        if (temp != null) {
+            this.head = temp.prev;
         }
     }
 }
