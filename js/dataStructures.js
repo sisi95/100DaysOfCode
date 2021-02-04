@@ -553,12 +553,14 @@ function DoublyLinkedList() {
     }
 
     this.reverse = () => {
+        let currentNode = this.head;
+
         if (!head) {
             return null;
         }
 
         let temp = null;
-        let currentNode = this.head;
+        tail = currentNode;
 
         while (currentNode) {
             temp = currentNode.prev;
@@ -567,8 +569,8 @@ function DoublyLinkedList() {
             currentNode = currentNode.prev;
         }
 
-        if (temp != null) {
-            this.head = temp.prev;
+        if (temp !== null) {
+            head = temp.prev;
         }
     }
 }
