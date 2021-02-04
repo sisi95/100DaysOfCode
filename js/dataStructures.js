@@ -563,7 +563,7 @@ function DoublyLinkedList() {
         tail = currentNode;
 
         while (currentNode) {
-            temp = currentNode.prev;
+            temp = currentNode.prev; 
             currentNode.prev = currentNode.next;
             currentNode.next = temp;
             currentNode = currentNode.prev;
@@ -571,6 +571,88 @@ function DoublyLinkedList() {
 
         if (temp !== null) {
             head = temp.prev;
+        }
+    }
+}
+
+var displayTree = tree => console.log(JSON.stringify(tree, null, 2));
+
+var Node2 = function(value) {
+    this.value = value;
+    this.left = null;
+    this.right = null;
+}
+
+function binarySearchTree() {
+    this.root = null;
+
+    this.add = (value) => {
+        let newNode = new Node2(value);
+        let current = this.root;
+        
+        if (this.root === null) {
+            this.root = newNode;
+            return undefined;
+        } 
+
+        while (current) {
+            if (value < current.value) {
+                if (!current.left) {
+                    current.left = newNode;
+                    return undefined;
+                }
+
+                current = current.left;
+            } else if (value > current.value) {
+                if (!current.right) {
+                    current.right = newNode;
+                    return undefined;
+                }
+
+                current = current.right;
+            } else {
+                return null;
+            }
+        }
+    }
+
+    this.findMin = () => {
+        let current = this.root;
+        let minimum = null;
+
+        if (this.root === null) {
+            return null;
+        }
+
+        while (current.left !== null) {
+            minimum = current.left;
+            current = current.left;
+        }
+
+        return minimum.value;
+    }
+
+    this.findMax = () => {
+        let current = this.root;
+        let max = null;
+
+        if (this.root === null) {
+            return null;
+        }
+
+        while (current.right) {
+            max = current.right;
+        }
+
+        return max;
+    }
+
+    this.isPresent = (value) => {
+        let current = this.root;
+        let present = false;
+
+        if (value < current) {
+            
         }
     }
 }
