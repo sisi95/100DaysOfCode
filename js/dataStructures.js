@@ -727,20 +727,61 @@ function binarySearchTree() {
         }
 
         if (this.root.right === null) {
-            return this.findMaxHeight(root.left) + 1;
+            return this.findMaxHeight(this.root.left) + 1;
         }
 
         if (this.root.left === null) {
-            return this.findMaxHeight(root.right) + 1;
+            return this.findMaxHeight(this.root.right) + 1;
         }
 
-        const leftHeight = this.findMaxHeight(root.left);
-        const rightHeight = this.findMaxHeight(root.right);
+        const leftHeight = this.findMaxHeight(this.root.left);
+        const rightHeight = this.findMaxHeight(this.root.right);
 
         return Math.max(leftHeight, rightHeight) + 1;
     }
 
-    this.isBalanced = (tree) => {
+    this.isBalanced = () => {
+        if (this.root === null) {
+            return true;
+        }
 
+        if (this.root.left === null && this.root.right === null) {
+            return true;
+        }
+
+        if (this.root.left === null) {
+            return this.findMaxHeight(this.root.right) <= 0;
+        } 
+
+        if (this.root.right === null) {
+            return this.findMaxHeight(this.root.left) <= 0;
+        }
+
+        const leftHeight = this.findMaxHeight(this.root.left);
+        const rightHeight = this.findMaxHeight(this.root.right);
+
+        if (Math.abs(leftHeight - rightHeight) > 1) {
+            return false;
+        }
+
+        return this.isBalanced(this.root.left) && this.isBalanced(this.root.right);
+    }
+
+    this.inorder = () => {
+        if (this.root === null) {
+            return null;
+        }
+    }
+
+    this.preorder = () => {
+        if (this.root === null) {
+            return null;
+        }
+    }
+
+    this.postorder = () => {
+        if (this.root === null) {
+            return null;
+        }
     }
 }
