@@ -649,10 +649,98 @@ function binarySearchTree() {
 
     this.isPresent = (value) => {
         let current = this.root;
-        let present = false;
 
-        if (value < current) {
-            
+        while (current) {
+            if (value === current.value) {
+                return true;
+            } if (value > current.value) {
+                current = current.right;
+            } else if (value < current.value) {
+                current = current.left;
+            }
         }
+
+        return false;
+    }
+
+    this.checkTree = (node) => {
+        let isIt = true;
+
+        if (node.left !== null) {
+            const left = node.left;
+            if (left.value > node.value) {
+                isIt = false;
+            } else {
+                this.checkTree(left);
+            }
+        }
+
+        if (node.right !== null) {
+            const right = node.right;
+            if (right.value < node.value) {
+                isIt = false;
+            } else {
+                this.checkTree(right);
+            }
+        }
+    }
+
+    this.isBinarySearchTree = (tree) => {
+        if (this.root === null) {
+            return null;
+        } else {
+            return this.checkTree(tree.root);
+        }
+    }
+
+    this.findMinHeight = () => {
+
+        if (this.root === null) {
+            return -1;
+        }
+
+        if (this.root.left === null && this.root.right === null) {
+            return 0;
+        }
+
+        if (this.root.right === null) {
+            return this.findMinHeight(root.left) + 1;
+        }
+
+        if (this.root.left === null) {
+            return this.findMinHeight(root.right) + 1;
+        }
+
+        const leftHeight = this.findMinHeight(root.left);
+        const rightHeight = this.findMinHeight(root.right);
+
+        return Math.min(leftHeight, rightHeight) + 1;
+    }
+
+    this.findMaxHeight = () => {
+        if (this.root === null) {
+            return -1;
+        }
+
+        if (this.root.left === null && this.root.right === null) {
+            return 0;
+        }
+
+        if (this.root.right === null) {
+            return this.findMaxHeight(root.left) + 1;
+        }
+
+        if (this.root.left === null) {
+            return this.findMaxHeight(root.right) + 1;
+        }
+
+        const leftHeight = this.findMaxHeight(root.left);
+        const rightHeight = this.findMaxHeight(root.right);
+
+        return Math.max(leftHeight, rightHeight) + 1;
+    }
+
+    this.isBalanced = (tree) => {
+
     }
 }
