@@ -825,11 +825,57 @@ function binarySearchTree() {
         if (this.root === null) {
             return null;
         }
+
+        let queue = [root];
+        let results = [];
+
+        while (queue.length > 0) {
+            let node = queue.shift();
+            
+            results.push(node.value);
+            if (node.left) {
+                queue.push(node.left);
+            }
+
+            if (node.right) {
+                queue.push(node.right);
+            }
+        }
+
+        return results;
     }
 
     this.reverseLevelOrder = (root = this.root) => {
         if (this.root === null) {
             return null;
+        }
+
+        let queue = [root];
+        let results = [];
+
+        while (queue.length > 0) {
+            let node = queue.shift();
+
+            results.push(node.value);
+            if (node.right) {
+                queue.push(node.right);
+            }
+
+            if (node.left) {
+                queue.push(node.left);
+            }
+        }
+
+        return results;
+    }
+
+    this.remove = (element) => {
+        if (element === null) {
+            return null;
+        }
+
+        if (node.value === element) {
+            
         }
     }
 }
@@ -840,9 +886,10 @@ tree.add(4);
 tree.add(10);
 tree.add(41);
 tree.add(2);
+tree.add(40)
 tree.add(19);
 tree.add(23);
+tree.add(3);
 
-console.log(tree.inorder());
-console.log(tree.preorder());
-console.log(tree.postorder());
+console.log(tree.levelOrder());
+console.log(tree.reverseLevelOrder());
