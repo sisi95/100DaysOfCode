@@ -693,21 +693,21 @@ function binarySearchTree() {
         }
     }
 
-    this.findMinHeight = () => {
+    this.findMinHeight = (root = this.root) => {
 
-        if (this.root === null) {
+        if (root === null) {
             return -1;
         }
 
-        if (this.root.left === null && this.root.right === null) {
+        if (root.left === null && root.right === null) {
             return 0;
         }
 
-        if (this.root.right === null) {
+        if (root.right === null) {
             return this.findMinHeight(root.left) + 1;
         }
 
-        if (this.root.left === null) {
+        if (root.left === null) {
             return this.findMinHeight(root.right) + 1;
         }
 
@@ -717,71 +717,132 @@ function binarySearchTree() {
         return Math.min(leftHeight, rightHeight) + 1;
     }
 
-    this.findMaxHeight = () => {
+    this.findMaxHeight = (root = this.root) => {
         if (this.root === null) {
             return -1;
         }
 
-        if (this.root.left === null && this.root.right === null) {
+        if (root.left === null && root.right === null) {
             return 0;
         }
 
-        if (this.root.right === null) {
-            return this.findMaxHeight(this.root.left) + 1;
+        if (root.right === null) {
+            return this.findMaxHeight(root.left) + 1;
         }
 
-        if (this.root.left === null) {
-            return this.findMaxHeight(this.root.right) + 1;
+        if (root.left === null) {
+            return this.findMaxHeight(root.right) + 1;
         }
 
-        const leftHeight = this.findMaxHeight(this.root.left);
-        const rightHeight = this.findMaxHeight(this.root.right);
+        const leftHeight = this.findMaxHeight(root.left);
+        const rightHeight = this.findMaxHeight(root.right);
 
         return Math.max(leftHeight, rightHeight) + 1;
     }
 
-    this.isBalanced = () => {
-        if (this.root === null) {
+    this.isBalanced = (root = this.root) => {
+        if (root === null) {
             return true;
         }
 
-        if (this.root.left === null && this.root.right === null) {
+        if (root.left === null && root.right === null) {
             return true;
         }
 
-        if (this.root.left === null) {
-            return this.findMaxHeight(this.root.right) <= 0;
+        if (root.left === null) {
+            return this.findMaxHeight(root.right) <= 0;
         } 
 
-        if (this.root.right === null) {
-            return this.findMaxHeight(this.root.left) <= 0;
+        if (root.right === null) {
+            return this.findMaxHeight(root.left) <= 0;
         }
 
-        const leftHeight = this.findMaxHeight(this.root.left);
-        const rightHeight = this.findMaxHeight(this.root.right);
+        const leftHeight = this.findMaxHeight(root.left);
+        const rightHeight = this.findMaxHeight(root.right);
 
         if (Math.abs(leftHeight - rightHeight) > 1) {
             return false;
         }
 
-        return this.isBalanced(this.root.left) && this.isBalanced(this.root.right);
+        return this.isBalanced(root.left) && this.isBalanced(root.right);
     }
 
-    this.inorder = () => {
+    this.inorder = (root = this.root, treeArray = []) => {
+        if (root === null) {
+            return null;
+        }
+
+        if (root.left) {
+            this.inorder(root.left, treeArray);
+        }
+
+        treeArray.push(root.value);
+
+        if (root.right) {
+            this.inorder(root.right, treeArray);
+        }
+
+        return treeArray;
+    }
+
+    this.preorder = (root = this.root, treeArray = []) => {
+        if (root === null) {
+            return null;
+        }
+
+        treeArray.push(root.value);
+
+        if (root.left) {
+            this.preorder(root.left, treeArray);
+        }
+
+        if (root.right) {
+            this.preorder(root.right, treeArray);
+        }
+
+        return treeArray;
+    }
+
+    this.postorder = (root = this.root, treeArray = []) => {
+        if (this.root === null) {
+            return null;
+        }
+
+        if (root.left) {
+            this.preorder(root.left, treeArray);
+        }
+
+        if (root.right) {
+            this.preorder(root.right, treeArray);
+        }
+
+        treeArray.push(root.value);
+
+        return treeArray;
+    }
+
+    this.levelOrder = (root = this.root) => {
         if (this.root === null) {
             return null;
         }
     }
 
-    this.preorder = () => {
-        if (this.root === null) {
-            return null;
-        }
-    }
-
-    this.postorder = () => {
+    this.reverseLevelOrder = (root = this.root) => {
         if (this.root === null) {
             return null;
         }
     }
 }
+
+var tree = new binarySearchTree();
+
+tree.add(4);
+tree.add(10);
+tree.add(41);
+tree.add(2);
+tree.add(19);
+tree.add(23);
+
+console.log(tree.inorder());
+console.log(tree.preorder());
+console.log(tree.postorder());
