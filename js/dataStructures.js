@@ -869,44 +869,60 @@ function binarySearchTree() {
         return results;
     }
 
-    this.remove = (value) => {
-        if (!this.root) {
+    this.removeLeaf = (value) => {
+        if (this.root === null) {
+            return null;
+          }
+        
+        var target;
+        var parent = null;
+
+        this.findValue = (node = this.root) => {
+            if (value == node.value) {
+                target = node;
+            } else if (value < node.value && node.left !== null) {
+                parent = node;
+                return findValue(node.left);
+            } else if (value < node.value && node.left === null) {
+                return null;
+            } else if (value > node.value && node.right !== null) {
+                parent = node;
+                return findValue(node.right);
+            } else {
+                return null;
+            }
+        }
+        
+        if (target === null) {
             return null;
         }
 
-        if (this.root.value === value) {
-            return this.root = null;
-        }
+        var children = (target.left !== null ? 1 : 0) + 
+        (target.right !== null ? 1 : 0);
 
-        this.removeNode = (root = this.root, removed = null) => {
-            if (value < root.value) {
-                if (root.left) {
-                    if (root.left.value === value && 
-                        root.left.left === null && 
-                        root.left.right === null) {
-                        root.left = null;
-                        return removed = true;
-                    } else {
-                        this.removeNode(root.left, removed);
-                    }
-                }
-            } else if (value > root.value) {
-                if (root.right) {
-                    if (root.right.value === value && 
-                        root.right.left === null && 
-                        root.right.right === null) {
-                        root.right = null;
-                        return removed = true;
-                    } else {
-                        this.removeNode(root.right, removed);
-                    }
+        if (children === 0) {
+            if (target == this.root) {
+                this.root = null;
+            } else {
+                if (parent.left == target) {
+                    parent.left = null;
+                } else {
+                    parent.right = null;
                 }
             }
-
-            return removed;
         }
 
-        return this.removeNode();
+        if (children === 1) {
+            if (target == this.root) {
+                this.root = this.root.left ? this.root.left : this.root.right;
+            } else {
+                if (parent.left === target) {
+                    parent.left = parent.left.left ? parent.left.left : parent.left.right;
+                } else {
+                    parent.right = parent.right.left ? parent.right.left : parent.right.right;
+                }
+            }
+        }
     }
 }
 
@@ -920,6 +936,3 @@ tree.add(40)
 tree.add(19);
 tree.add(23);
 tree.add(3);
-
-console.log(tree.levelOrder());
-console.log(tree.reverseLevelOrder());
