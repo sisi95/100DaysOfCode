@@ -869,14 +869,44 @@ function binarySearchTree() {
         return results;
     }
 
-    this.remove = (element) => {
-        if (element === null) {
+    this.remove = (value) => {
+        if (!this.root) {
             return null;
         }
 
-        if (node.value === element) {
-            
+        if (this.root.value === value) {
+            return this.root = null;
         }
+
+        this.removeNode = (root = this.root, removed = null) => {
+            if (value < root.value) {
+                if (root.left) {
+                    if (root.left.value === value && 
+                        root.left.left === null && 
+                        root.left.right === null) {
+                        root.left = null;
+                        return removed = true;
+                    } else {
+                        this.removeNode(root.left, removed);
+                    }
+                }
+            } else if (value > root.value) {
+                if (root.right) {
+                    if (root.right.value === value && 
+                        root.right.left === null && 
+                        root.right.right === null) {
+                        root.right = null;
+                        return removed = true;
+                    } else {
+                        this.removeNode(root.right, removed);
+                    }
+                }
+            }
+
+            return removed;
+        }
+
+        return this.removeNode();
     }
 }
 
